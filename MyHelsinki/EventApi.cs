@@ -9,35 +9,39 @@ namespace MyHelsinki
 {
     public static class EventApi
     {
-        const string url = "http://open-api.myhelsinki.fi/v1/places/";
+        const string baseUrl = "https://open-api.myhelsinki.fi";
 
-        public static async Task<Event> GetEvents()
+
+        public static async Task<EventList> GetEvents(int limit, string tag)
         {
-            string urlParams = "?limit=5";
+            string url = baseUrl + "/v1/events/";
 
-            var response = await ApiHelper.RunAsync<Event> (url, urlParams);
+            string urlParams = "";
+
+            if (limit > 0)
+            {
+                urlParams = "?limit=" + limit + "&tags_search=" + tag;
+            }
+
+            var response = await ApiHelper.RunAsync<EventList>(url, urlParams);
             return response;
         }
 
-        public static async Task<Activities> GetActivies()
+        public static async Task<Event> GetSingleEvent(string eventId)
         {
-            string urlParams = "";
+            string url = baseUrl + "/v1/event/" + eventId;
+            var response = await ApiHelper.RunAsync<Event>(url, "");
+            return response;
+        }
 
-            var response = await ApiHelper.RunAsync<Activities>(url, urlParams);
+        public static async Task<ActivityList> GetActivies(int limit)
+        {
+            string url = baseUrl + "/v2/activities";
+            string urlParams = "?limit=" + limit;
+
+            var response = await ApiHelper.RunAsync<ActivityList>(url, urlParams);
             return response;
         }
     }
 
-    public static class TrainApi
-    {
-        const string url = "https://rata.digitraffic.fi/api/v1/metadata/stations";
-
-        public static async Task<StationList> GetStations()
-        {
-            string urlParams = "";
-
-            var response = await ApiHelper.RunAsync<StationList>(url, urlParams);
-            return response;
-        }
-    }
 }

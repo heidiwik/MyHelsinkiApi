@@ -22,10 +22,10 @@ namespace APIHelpers
         {
             try
             {
-                using (var client = GetHttpClient(url))
+                using (var client = GetHttpClient(url+urlParams))
                 {
                     // send GET request
-                    HttpResponseMessage response = await client.GetAsync(urlParams);
+                    HttpResponseMessage response = await client.GetAsync("");
 
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
@@ -35,8 +35,7 @@ namespace APIHelpers
                         var result = JsonSerializer.Deserialize<T>(json);
 
                         return result;
-                    } 
-
+                    }
 
                     return default(T);
                 }

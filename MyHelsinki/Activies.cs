@@ -5,14 +5,14 @@ using System.Text;
 namespace MyHelsinkiActivities
 {
 
-    public class Activities
+    public class ActivityList
     {
         public int offset { get; set; }
         public int count { get; set; }
-        public Row[] rows { get; set; }
+        public Activity[] rows { get; set; }
     }
 
-    public class Row
+    public class Activity
     {
         public string id { get; set; }
         public DateTime updated { get; set; }
@@ -149,5 +149,6 @@ namespace MyHelsinkiActivities
         public string smallUrl { get; set; }
         public string largeUrl { get; set; }
     }
+
 
 }
